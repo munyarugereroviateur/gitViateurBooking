@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>All Bookings</h2>
+<form method="get" class="row g-2 mb-3">
+  <div class="col-auto">
+    <input type="text" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Search ticket or passenger last name...">
+  </div>
+  <div class="col-auto"><button class="btn btn-primary">Search</button></div>
+</form>
+<table class="table table-striped">
+<thead><tr>
+<th>Ticket</th><th>Passenger</th><th>Flight</th><th>Route</th>
+<th>Seat</th><th>Class</th><th>Status</th><th>Booked On</th>
+</tr></thead>
+<tbody>
+{% for booking in bookings %}
+<tr>
+<td>{{ booking.ticket_number }}</td>
+<td>{{ booking.passenger }}</td>
+<td>{{ booking.flight.flight_number }}</td>
+<td>{{ booking.flight.origin }} &rarr; {{ booking.flight.destination }}</td>
+<td>{{ booking.seat_number }}</td>
+<td>{{ booking.class_type }}</td>
+<td>
+<span class="badge {% if booking.status == 'Confirmed' %}bg-primary{% elif booking.status == 'Checked-in' %}bg-success{% else %}bg-secondary{% endif %}">
+{{ booking.status }}
+</span>
+</td>
+<td>{{ booking.booking_date }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="8" class="text-center text-muted">No bookings found.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

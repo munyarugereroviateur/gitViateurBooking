@@ -1,0 +1,10 @@
+body { background-color: #f8f9fa; }
+
+.navbar-brand { font-weight: bold; letter-spacing: 0.5px; }
+
+.badge { font-size: 0.85rem; }
+
+@media (max-width: 768px) {
+  table { font-size: 0.85rem; }
+  .navbar-brand { font-size: 1rem; }
+}

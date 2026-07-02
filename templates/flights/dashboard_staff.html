@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Staff Dashboard</h2>
+<div class="row g-3 mt-2">
+  <div class="col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title text-muted">Total Flights</h5>
+        <p class="display-6">{{ total_flights }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title text-muted">Total Bookings</h5>
+        <p class="display-6">{{ total_bookings }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title text-muted">Total Aircraft</h5>
+        <p class="display-6">{{ total_aircraft }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title text-muted">Total Passengers</h5>
+        <p class="display-6">{{ total_passengers }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-4">
+  <a href="{% url 'flight_list' %}" class="btn btn-primary">Manage Flights</a>
+  <a href="{% url 'all_bookings' %}" class="btn btn-secondary">View All Bookings</a>
+</div>
+{% endblock %}

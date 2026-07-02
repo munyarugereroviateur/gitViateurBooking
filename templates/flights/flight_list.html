@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load flight_extras %}
+
+{% block content %}
+<h2>Available Flights</h2>
+
+<form method="get" class="row g-2 mb-3">
+  <div class="col-auto">
+    <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Search flight, origin, destination...">
+  </div>
+  <div class="col-auto"><button class="btn btn-primary">Search</button></div>
+  {% if user|is_staff_role %}
+  <div class="col-auto ms-auto"><a href="{% url 'flight_create' %}" class="btn btn-success">Add Flight</a></div>
+  {% endif %}
+</form>
+
+<table class="table table-striped">
+<thead><tr>
+<th>Flight</th><th>Route</th><th>Departure</th><th>Status</th>
+<th>Seats Left</th><th>Delay Probability</th><th>Actions</th>
+</tr></thead>
+<tbody>
+{% for item in flights_with_delay %}
+<tr>
+<td>{{ item.flight.flight_number }}</td>
+<td>{{ item.flight.origin }} &rarr; {{ item.flight.destination }}</td>
+<td>{{ item.flight.departure_time }}</td>
+<td>{{ item.flight.status }}</td>
+<td>{{ item.flight.seats_available }}</td>
+<td>
+<span class="badge {% if item.delay_probability > 50 %}bg-danger{% else %}bg-success{% endif %}">
+{{ item.delay_probability }}%
+</span>
+</td>
+<td>
+{% if user|is_staff_role %}
+<a href="{% url 'flight_update' item.flight.id %}" class="btn btn-sm btn-warning">Edit</a>
+<a href="{% url 'flight_delete' item.flight.id %}" class="btn btn-sm btn-danger">Delete</a>
+{% else %}
+<a href="{% url 'booking_create' %}?flight={{ item.flight.id }}" class="btn btn-sm btn-primary">Book</a>
+{% endif %}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

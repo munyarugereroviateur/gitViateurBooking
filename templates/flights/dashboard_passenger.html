@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My Dashboard</h2>
+<p class="text-muted">Welcome back, {{ user.username }}!</p>
+<table class="table table-striped">
+<thead><tr>
+<th>Ticket</th><th>Flight</th><th>Route</th><th>Departure</th><th>Status</th>
+</tr></thead>
+<tbody>
+{% for booking in bookings %}
+<tr>
+<td>{{ booking.ticket_number }}</td>
+<td>{{ booking.flight.flight_number }}</td>
+<td>{{ booking.flight.origin }} &rarr; {{ booking.flight.destination }}</td>
+<td>{{ booking.flight.departure_time }}</td>
+<td>
+<span class="badge {% if booking.status == 'Confirmed' %}bg-primary{% elif booking.status == 'Checked-in' %}bg-success{% else %}bg-secondary{% endif %}">
+{{ booking.status }}
+</span>
+</td>
+</tr>
+{% empty %}
+<tr><td colspan="5" class="text-center text-muted">You have no bookings yet.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+<div class="mt-3">
+  <a href="{% url 'flight_list' %}" class="btn btn-primary">Browse Flights</a>
+  <a href="{% url 'my_bookings' %}" class="btn btn-secondary">View My Bookings</a>
+</div>
+{% endblock %}
