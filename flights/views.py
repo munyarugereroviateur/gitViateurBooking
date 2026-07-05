@@ -11,7 +11,7 @@ from django.conf import settings
 from .models import Aircraft, Flight, Passenger, Booking
 from .forms import AircraftForm, FlightForm, PassengerForm, BookingForm, RegisterForm
 from .decorators import staff_required
-from .ml_utils import predict_delay_probability
+from .ml_utils import predict_delay_probability_for_flight
 
 
 def register_view(request):
@@ -82,8 +82,8 @@ def flight_list(request):
     page_obj = paginator.get_page(request.GET.get('page'))
     flights_with_delay = []
     for f in page_obj:
-        prob = predict_delay_probability(f)
-        flights_with_delay.append({'flight': f, 'delay_probability': prob})
+      prob = predict_delay_probability_for_flight(f)
+    flights_with_delay.append({'flight': f, 'delay_probability': round(prob * 100, 1)})
     return render(request, 'flights/flight_list.html',
                   {'flights_with_delay': flights_with_delay, 'page_obj': page_obj, 'query': query})
 

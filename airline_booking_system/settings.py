@@ -53,8 +53,7 @@ WSGI_APPLICATION = 'airline_booking_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': ''
-        '',
+        'NAME': 'airline_booking_db',
         'USER': 'root',
         'PASSWORD': 'Viatype@123',
         'HOST': 'localhost',
